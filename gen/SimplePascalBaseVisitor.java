@@ -1,4 +1,4 @@
-// Generated from C:/CSD/SGP/SimpleFortran/SimpleFortran/src\SimplePascal.g4 by ANTLR 4.10.1
+// Generated from D:/CSD/4 - Semester/SGP/SimplePascal/src\SimplePascal.g4 by ANTLR 4.10.1
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
