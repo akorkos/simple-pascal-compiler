@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SimpleFortran.iml" filepath="$PROJECT_DIR$/SimpleFortran.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SimplePascal.iml" filepath="$PROJECT_DIR$/SimplePascal.iml" />
     </modules>
   </component>
 </project>

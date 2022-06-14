@@ -1,4 +1,4 @@
-// Generated from D:/CSD/4 - Semester/SGP/SimplePascal/src\SimplePascal.g4 by ANTLR 4.10.1
+// Generated from D:/Desktop/SimplePascal/src\SimplePascal.g4 by ANTLR 4.10.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -40,11 +40,82 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConstant_defs(SimplePascalParser.Constant_defsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#expression}.
+	 * Visit a parse tree produced by the {@code orExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(SimplePascalParser.ExpressionContext ctx);
+	T visitOrExpression(SimplePascalParser.OrExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code notationExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotationExpression(SimplePascalParser.NotationExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code tExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTExpression(SimplePascalParser.TExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code muldivExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMuldivExpression(SimplePascalParser.MuldivExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code inRElEquExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInRElEquExpression(SimplePascalParser.InRElEquExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code addSubExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddSubExpression(SimplePascalParser.AddSubExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code varExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarExpression(SimplePascalParser.VarExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code constExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstExpression(SimplePascalParser.ConstExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code notExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotExpression(SimplePascalParser.NotExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code seterExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSeterExpression(SimplePascalParser.SeterExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parExpression}
+	 * labeled alternative in {@link SimplePascalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParExpression(SimplePascalParser.ParExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SimplePascalParser#variable}.
 	 * @param ctx the parse tree
@@ -58,11 +129,33 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpressions(SimplePascalParser.ExpressionsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#constant}.
+	 * Visit a parse tree produced by the {@code integerConst}
+	 * labeled alternative in {@link SimplePascalParser#constant}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitConstant(SimplePascalParser.ConstantContext ctx);
+	T visitIntegerConst(SimplePascalParser.IntegerConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code realConst}
+	 * labeled alternative in {@link SimplePascalParser#constant}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRealConst(SimplePascalParser.RealConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code booleanConst}
+	 * labeled alternative in {@link SimplePascalParser#constant}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooleanConst(SimplePascalParser.BooleanConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code charConst}
+	 * labeled alternative in {@link SimplePascalParser#constant}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharConst(SimplePascalParser.CharConstContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SimplePascalParser#setexpression}.
 	 * @param ctx the parse tree
@@ -124,11 +217,33 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTypename(SimplePascalParser.TypenameContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#standard_type}.
+	 * Visit a parse tree produced by the {@code sInteger}
+	 * labeled alternative in {@link SimplePascalParser#standard_type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStandard_type(SimplePascalParser.Standard_typeContext ctx);
+	T visitSInteger(SimplePascalParser.SIntegerContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code sReal}
+	 * labeled alternative in {@link SimplePascalParser#standard_type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSReal(SimplePascalParser.SRealContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code sBoolean}
+	 * labeled alternative in {@link SimplePascalParser#standard_type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSBoolean(SimplePascalParser.SBooleanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code sChar}
+	 * labeled alternative in {@link SimplePascalParser#standard_type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSChar(SimplePascalParser.SCharContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SimplePascalParser#fields}.
 	 * @param ctx the parse tree

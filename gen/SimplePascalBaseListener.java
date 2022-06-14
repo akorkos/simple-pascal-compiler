@@ -1,4 +1,4 @@
-// Generated from D:/CSD/4 - Semester/SGP/SimplePascal/src\SimplePascal.g4 by ANTLR 4.10.1
+// Generated from D:/Desktop/SimplePascal/src\SimplePascal.g4 by ANTLR 4.10.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -75,13 +75,133 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(SimplePascalParser.ExpressionContext ctx) { }
+	@Override public void enterOrExpression(SimplePascalParser.OrExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpression(SimplePascalParser.ExpressionContext ctx) { }
+	@Override public void exitOrExpression(SimplePascalParser.OrExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNotationExpression(SimplePascalParser.NotationExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotationExpression(SimplePascalParser.NotationExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTExpression(SimplePascalParser.TExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTExpression(SimplePascalParser.TExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMuldivExpression(SimplePascalParser.MuldivExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMuldivExpression(SimplePascalParser.MuldivExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInRElEquExpression(SimplePascalParser.InRElEquExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInRElEquExpression(SimplePascalParser.InRElEquExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAddSubExpression(SimplePascalParser.AddSubExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAddSubExpression(SimplePascalParser.AddSubExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVarExpression(SimplePascalParser.VarExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVarExpression(SimplePascalParser.VarExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstExpression(SimplePascalParser.ConstExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstExpression(SimplePascalParser.ConstExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNotExpression(SimplePascalParser.NotExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotExpression(SimplePascalParser.NotExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSeterExpression(SimplePascalParser.SeterExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSeterExpression(SimplePascalParser.SeterExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParExpression(SimplePascalParser.ParExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParExpression(SimplePascalParser.ParExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -111,13 +231,49 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConstant(SimplePascalParser.ConstantContext ctx) { }
+	@Override public void enterIntegerConst(SimplePascalParser.IntegerConstContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConstant(SimplePascalParser.ConstantContext ctx) { }
+	@Override public void exitIntegerConst(SimplePascalParser.IntegerConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRealConst(SimplePascalParser.RealConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRealConst(SimplePascalParser.RealConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBooleanConst(SimplePascalParser.BooleanConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBooleanConst(SimplePascalParser.BooleanConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCharConst(SimplePascalParser.CharConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCharConst(SimplePascalParser.CharConstContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -243,13 +399,49 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStandard_type(SimplePascalParser.Standard_typeContext ctx) { }
+	@Override public void enterSInteger(SimplePascalParser.SIntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStandard_type(SimplePascalParser.Standard_typeContext ctx) { }
+	@Override public void exitSInteger(SimplePascalParser.SIntegerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSReal(SimplePascalParser.SRealContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSReal(SimplePascalParser.SRealContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSBoolean(SimplePascalParser.SBooleanContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSBoolean(SimplePascalParser.SBooleanContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSChar(SimplePascalParser.SCharContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSChar(SimplePascalParser.SCharContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

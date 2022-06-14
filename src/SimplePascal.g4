@@ -1,5 +1,9 @@
 grammar SimplePascal;
 
+options {
+    language = Java;
+}
+
 /* Parser */
 
 program                 : header declarations subprograms comp_statement DOT;
@@ -15,17 +19,18 @@ constdefs               : CONST constant_defs SEMI
 constant_defs           : constant_defs SEMI ID EQU expression
                         | ID EQU expression;
 
-expression              : expression OROP expression
-                        | expression MULDIVANDOP expression
-                        | expression ADDOP expression
-                        | expression (INOP | RELOP | EQU) expression
-                        | NOTOP expression
-                        | ADDOP expression
-                        | variable
-                        | ID LPAREN expressions RPAREN
-                        | constant
-                        | LPAREN expression RPAREN
-                        | setexpression;
+expression              : expression OROP expression                                        #orExpression
+                        | expression op = (MULOP | DIVOP | DIV | MOD | ANDOP) expression    #muldivExpression
+                        | expression op = (ADDOP | SUBOP) expression                        #addSubExpression
+                        | expression op = (INOP | LTEQ | GTEQ | LT | GT | EQU) expression   #inRElEquExpression
+                        | NOTOP expression                                                  #notExpression
+                        | op = (ADDOP | SUBOP) expression                                   #notationExpression
+                        | variable                                                          #varExpression
+                        | ID LPAREN expressions RPAREN                                      #tExpression
+                        | constant                                                          #constExpression
+                        | LPAREN expression RPAREN                                          #parExpression
+                        | setexpression                                                     #seterExpression
+                        ;
 
 variable                : ID
                         | variable DOT ID
@@ -34,10 +39,11 @@ variable                : ID
 expressions             : expressions COMMA expression
                         | expression;
 
-constant                : ICONST
-                        | RCONST
-                        | BCONST
-                        | CCONST;
+constant                : ICONST    #integerConst
+                        | RCONST    #realConst
+                        | BCONST    #booleanConst
+                        | CCONST    #charConst
+                        ;
 
 setexpression           : LBRACK elexpressions RBRACK
                         | LBRACK RBRACK;
@@ -67,9 +73,9 @@ dims                    : dims COMMA limits
 limits                  : limit DOTDOT limit
                         | ID;
 
-limit                   : ADDOP ICONST
+limit                   : op = (ADDOP | SUBOP) ICONST
                         | ICONST
-                        | ADDOP ID
+                        | op = (ADDOP | SUBOP) ID
                         | CCONST
                         | BCONST
                         | ID;
@@ -77,10 +83,11 @@ limit                   : ADDOP ICONST
 typename                : standard_type
                         | ID;
 
-standard_type           : INTEGER
-                        | REAL
-                        | BOOLEAN
-                        | CHAR;
+standard_type           : INTEGER   #sInteger
+                        | REAL      #sReal
+                        | BOOLEAN   #sBoolean
+                        | CHAR      #sChar
+                        ;
 
 fields                  : fields SEMI field
                         | field;
@@ -213,9 +220,7 @@ fragment CR             : '\\r';
 fragment BS             : '\\b';
 fragment VT             : '\\v';
 fragment NPC            : LF | FF | HT | CR | BS | VT;
-
 //-----------------------------------------------------
-
 PROGRAM                 : P R O G R A M;
 CONST                   : C O N S T;
 TYPE                    : T Y P E;
@@ -244,62 +249,43 @@ TO                      : T O;
 WITH                    : W I T H;
 READ                    : R E A D;
 WRITE                   : W R I T E;
-
 //---------------------------------------------------------------
-
 RCONST                  : [0-9]*DOT[0-9]+(E DASH?[0-9])?
                         | ([1-9][0-9]*)E DASH?[0-9]
                         | (ZERO H)((ZERO | ([1-9][0-9] | [A-Fa-f])+)DOT(ZERO | ([1-9][0-9] | [A-Fa-f])+))
                         | (ZERO B)([0-1]*DOT[0-1]*[1][0-1]*);
-
 //----------------------------------------------------------------
-
 ICONST                  : ZERO
                         | [1-9]+[0-9]*
                         | (ZERO H)([1-9] | [a-fA-F])+([0-9] | [a-fA-F])*
                         | (ZERO B)[1]+[0-1]* ;
-
 //---------------------------------------------------------------
-
 TRUE                    : T R U E;
 FALSE                   : F A L S E;
-
 BCONST                  : TRUE
                         | FALSE;
-
 //----------------------------------------------------------------
-
 CCONST                  : EARS(LETTER | NPC)EARS;
-
 //----------------------------------------------------------------
 
-RELOP                   : '>'
-                        | '>='
-                        | '<'
-                        | '<='
-                        | '<>';
-
-ADDOP                   : '+'
-                        | '-';
-
+NEQ                     : '<>';
+LTEQ                    : '<=';
+GTEQ                    : '>=';
+LT                      : '<';
+GT                      : '>';
+ADDOP                   : '+';
+SUBOP                   : '-';
 OROP                    : O R;
-
-MULDIVANDOP             : '*'
-                        | '/'
-                        | D I V
-                        | M O D
-                        | A N D;
-
+MULOP                   : '*';
+DIVOP                   : D I V;
+DIV                     : '/';
+MOD                     : M O D;
+ANDOP                   : A N D;
 NOTOP                   : N O T;
-
 INOP                    : I N;
-
 //----------------------------------------------------------------
-
 STRING                  : DEARS(TEXT | ESC)*DEARS;
-
 //----------------------------------------------------------------
-
 LPAREN                  : '(';
 RPAREN                  : ')';
 SEMI                    : ';';
@@ -311,17 +297,10 @@ RBRACK                  : ']';
 ASSIGN                  : ':=';
 DOT                     : '.';
 DOTDOT                  : '..';
-
 //----------------------------------------------------------------
-
 ID                      : UNDERSCORE*([A-Za-z])+(([A-Za-z] | [0-9])*|(UNDERSCORE*([A-Za-z] | [0-9])+)*);
-
 //----------------------------------------------------------------
-
 COMMENT                 : '{'.*?'}' -> skip;
-
 //----------------------------------------------------------------
-
 WHITESPACE              : [ \t\n\r] -> skip;
-
 END_EOF                 : EOF -> channel(1);

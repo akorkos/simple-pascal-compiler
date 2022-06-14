@@ -1,16 +1,15 @@
 program try_it;
 const g= 0B1011;
 type ar= array[1..g] of integer;
-     ar1= array[1..g] of real;
-     re= record
-           x1,x2:integer { no comment
-at all! }
-         end;
-     re1= record b:boolean end;
-     gar= -g..g;
-     arre1 = array[gar] of re1;
-     day = (monday,tuesday,friday);
-     day_array = array[monday..tuesday] of char;
+    ar1= array[1..g] of real;
+    re = record
+        x1,x2:integer { no comment at all! }
+    end;
+    re1= record b:boolean end;
+    gar= -g..g;
+    arre1 = array[gar] of re1;
+    day = (monday,tuesday,friday);
+    day_array = array[monday..tuesday] of char;
 var x,y: ar; xx: ar1; z,w: real; r: re;
     i,j,k: integer; b: arre1;
     c: day_array;
