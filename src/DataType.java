@@ -13,4 +13,11 @@ public class DataType {
     public PrimativeDataTypes getDataType() {
         return DataType;
     }
+
+    @Override
+    public String toString(){
+        if (this.DataType == null)
+            return "NULL";
+        return this.DataType.toString();
+    }
 }

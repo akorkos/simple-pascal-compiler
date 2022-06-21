@@ -16,13 +16,24 @@ constdefs               : CONST constant_defs SEMI
                         |
                         ;
 
-constant_defs           : constant_defs SEMI ID EQU expression
-                        | ID EQU expression;
+
+/*constant_defs           : constant_defs SEMI ID EQU expression
+                        | ID EQU expression;*/
+
+/*new_constant_defs       : SEMI ID EQU expression new_constant_defs                          #constantDef
+                        |                                                                   #empty
+                        ;
+
+constant_defs           : ID EQU expression new_constant_defs;*/
+
+constant_defs           : ID EQU expression (SEMI ID EQU expression)* //*
+                        ;
+
 
 expression              : expression OROP expression                                        #orExpression
                         | expression op = (MULOP | DIVOP | DIV | MOD | ANDOP) expression    #muldivExpression
                         | expression op = (ADDOP | SUBOP) expression                        #addSubExpression
-                        | expression op = (INOP | LTEQ | GTEQ | LT | GT | EQU) expression   #inRElEquExpression
+                        | expression op = (INOP | LTEQ | GTEQ | LT | GT | EQU | NEQ) expression   #inRElEquExpression
                         | NOTOP expression                                                  #notExpression
                         | op = (ADDOP | SUBOP) expression                                   #notationExpression
                         | variable                                                          #varExpression
@@ -32,17 +43,18 @@ expression              : expression OROP expression                            
                         | setexpression                                                     #seterExpression
                         ;
 
-variable                : ID
-                        | variable DOT ID
-                        | variable LBRACK expressions RBRACK;
+variable                : ID                                                                #varID
+                        | variable DOT ID                                                   #varRec
+                        | variable LBRACK expressions RBRACK                                #varArr
+                        ;
 
 expressions             : expressions COMMA expression
                         | expression;
 
-constant                : ICONST    #integerConst
-                        | RCONST    #realConst
-                        | BCONST    #booleanConst
-                        | CCONST    #charConst
+constant                : ICONST                                                            #integerConst
+                        | RCONST                                                            #realConst
+                        | BCONST                                                            #booleanConst
+                        | CCONST                                                            #charConst
                         ;
 
 setexpression           : LBRACK elexpressions RBRACK
@@ -58,14 +70,18 @@ typedefs                : TYPE type_defs SEMI
                         |
                         ;
 
-type_defs               : type_defs SEMI ID EQU type_def
-                        | ID EQU type_def;
+/*type_defs               : type_defs SEMI ID EQU type_def
+                        | ID EQU type_def;*/
 
-type_def                : ARRAY LBRACK dims RBRACK OF typename
-                        | SET OF typename
-                        | RECORD fields END
-                        | LPAREN identifiers RPAREN
-                        | limit DOTDOT limit;
+type_defs               : ID EQU type_def (SEMI ID EQU type_def)*;
+
+
+type_def                : ARRAY LBRACK dims RBRACK OF typename          #typeArray
+                        | SET OF typename                               #typeSet
+                        | RECORD fields END                             #typeRecord
+                        | LPAREN identifiers RPAREN                     #typeEnum
+                        | limit DOTDOT limit                            #typeSubSection
+                        ;
 
 dims                    : dims COMMA limits
                         | limits;
@@ -73,15 +89,21 @@ dims                    : dims COMMA limits
 limits                  : limit DOTDOT limit
                         | ID;
 
-limit                   : op = (ADDOP | SUBOP) ICONST
+/*limit                   : op = (ADDOP | SUBOP) ICONST
                         | ICONST
                         | op = (ADDOP | SUBOP) ID
                         | CCONST
                         | BCONST
-                        | ID;
+                        | ID;*/
 
-typename                : standard_type
-                        | ID;
+limit                   : SUBOP? ICONST     #lmtnegConst
+                        | constant          #lmtConst
+                        | SUBOP? ID         #lmtId
+                        ;
+
+typename                : standard_type     #tStandardType
+                        | ID                #tID
+                        ;
 
 standard_type           : INTEGER   #sInteger
                         | REAL      #sReal
@@ -94,15 +116,34 @@ fields                  : fields SEMI field
 
 field                   : identifiers COLON typename;
 
-identifiers             : identifiers COMMA ID
-                        | ID;
+/*identifiers             : identifiers COMMA ID
+                        | ID
+                        ;*/
+
+
+/*identifiers             : ID new_identifiers;
+
+new_identifiers         : COMMA ID new_identifiers
+                        |
+                        ;*/
 
 vardefs                 : VAR variable_defs SEMI
                         |
                         ;
 
-variable_defs           : variable_defs SEMI identifiers COLON typename
-                        | identifiers COLON typename;
+/*variable_defs           : variable_defs SEMI identifiers COLON typename                     #mulVariableDef
+                        | identifiers COLON typename                                        #variableDef
+                        ;*/
+
+/*variable_defs           : identifiers COLON typename new_variable_defs;
+
+new_variable_defs       : SEMI identifiers COLON typename new_variable_defs                 #variableDef
+                        |                                                                   #empty1
+                        ;*/
+variable_defs           : identifiers? COLON typename (SEMI identifiers? COLON typename)*
+                        ;
+
+identifiers             : ID (COMMA ID)*;
 
 subprograms             : subprograms subprogram SEMI
                         |
@@ -268,11 +309,11 @@ BCONST                  : TRUE
 CCONST                  : EARS(LETTER | NPC)EARS;
 //----------------------------------------------------------------
 
-NEQ                     : '<>';
 LTEQ                    : '<=';
 GTEQ                    : '>=';
 LT                      : '<';
 GT                      : '>';
+NEQ                     : '<>';
 ADDOP                   : '+';
 SUBOP                   : '-';
 OROP                    : O R;

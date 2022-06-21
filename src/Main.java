@@ -16,6 +16,16 @@ public class Main extends Visitor{
         Visitor v = new Visitor();
         v.visit(tree);
 
+        for (Variable name: v.memory.keySet()) {
+            String key = name.toString();
+            System.out.println(key + " " + v.memory.get(name));
+        }
+
+        for (Variable name: v.types.keySet()) {
+            String key = name.toString();
+            System.out.println(key + " " + v.types.get(name));
+        }
+
         /*for (Variable i : v.constants)
             System.out.println(i);
 

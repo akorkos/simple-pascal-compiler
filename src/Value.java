@@ -1,13 +1,19 @@
 public class Value {
     public static Value VOID = new Value(new Object());
+    public static Value NULL = new Value(new Object());
     private DataType dataType;
-    Object value;
+    private Object value;
 
     public Value(Object value) {
         if (value instanceof DataType)
             this.dataType = (DataType) value;
         else
             this.value = value;
+    }
+
+    public Value(Object value, DataType dataType) {
+        this.dataType = dataType;
+        this.value = value;
     }
 
     public void updateValue(Object value) {
@@ -39,11 +45,21 @@ public class Value {
         return value instanceof Double;
     }
 
-    public PrimativeDataTypes getDataType(){
-        if (value instanceof DataType){
-            return ((DataType) value).getDataType();
-        }
-        return null;
+    public DataType getDataType(){
+        return dataType;
+    }
+
+    public void setDataType(DataType dataType){
+        this.dataType = dataType;
+    }
+
+    public Boolean isNUmeric(){
+        return this.dataType.getDataType() == PrimativeDataTypes.Integer || this.dataType.getDataType() == PrimativeDataTypes.Real;
+    }
+
+    public void updateNumericValue(){
+
+
     }
 
     @Override
@@ -74,7 +90,7 @@ public class Value {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return "Value: " + this.value + ", dataType: " + this.dataType;
     }
 
 }

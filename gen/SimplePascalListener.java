@@ -189,15 +189,41 @@ public interface SimplePascalListener extends ParseTreeListener {
 	 */
 	void exitParExpression(SimplePascalParser.ParExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SimplePascalParser#variable}.
+	 * Enter a parse tree produced by the {@code varArr}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariable(SimplePascalParser.VariableContext ctx);
+	void enterVarArr(SimplePascalParser.VarArrContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SimplePascalParser#variable}.
+	 * Exit a parse tree produced by the {@code varArr}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariable(SimplePascalParser.VariableContext ctx);
+	void exitVarArr(SimplePascalParser.VarArrContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code varID}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarID(SimplePascalParser.VarIDContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code varID}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarID(SimplePascalParser.VarIDContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code varRec}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarRec(SimplePascalParser.VarRecContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code varRec}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarRec(SimplePascalParser.VarRecContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SimplePascalParser#expressions}.
 	 * @param ctx the parse tree
@@ -307,15 +333,65 @@ public interface SimplePascalListener extends ParseTreeListener {
 	 */
 	void exitType_defs(SimplePascalParser.Type_defsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SimplePascalParser#type_def}.
+	 * Enter a parse tree produced by the {@code typeArray}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
 	 * @param ctx the parse tree
 	 */
-	void enterType_def(SimplePascalParser.Type_defContext ctx);
+	void enterTypeArray(SimplePascalParser.TypeArrayContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SimplePascalParser#type_def}.
+	 * Exit a parse tree produced by the {@code typeArray}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
 	 * @param ctx the parse tree
 	 */
-	void exitType_def(SimplePascalParser.Type_defContext ctx);
+	void exitTypeArray(SimplePascalParser.TypeArrayContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typeSet}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeSet(SimplePascalParser.TypeSetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeSet}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeSet(SimplePascalParser.TypeSetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typeRecord}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeRecord(SimplePascalParser.TypeRecordContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeRecord}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeRecord(SimplePascalParser.TypeRecordContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typeEnum}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeEnum(SimplePascalParser.TypeEnumContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeEnum}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeEnum(SimplePascalParser.TypeEnumContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typeSubSection}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeSubSection(SimplePascalParser.TypeSubSectionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeSubSection}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeSubSection(SimplePascalParser.TypeSubSectionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SimplePascalParser#dims}.
 	 * @param ctx the parse tree
@@ -337,25 +413,65 @@ public interface SimplePascalListener extends ParseTreeListener {
 	 */
 	void exitLimits(SimplePascalParser.LimitsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SimplePascalParser#limit}.
+	 * Enter a parse tree produced by the {@code lmtnegConst}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 */
-	void enterLimit(SimplePascalParser.LimitContext ctx);
+	void enterLmtnegConst(SimplePascalParser.LmtnegConstContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SimplePascalParser#limit}.
+	 * Exit a parse tree produced by the {@code lmtnegConst}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 */
-	void exitLimit(SimplePascalParser.LimitContext ctx);
+	void exitLmtnegConst(SimplePascalParser.LmtnegConstContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SimplePascalParser#typename}.
+	 * Enter a parse tree produced by the {@code lmtConst}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypename(SimplePascalParser.TypenameContext ctx);
+	void enterLmtConst(SimplePascalParser.LmtConstContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SimplePascalParser#typename}.
+	 * Exit a parse tree produced by the {@code lmtConst}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypename(SimplePascalParser.TypenameContext ctx);
+	void exitLmtConst(SimplePascalParser.LmtConstContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lmtId}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
+	 * @param ctx the parse tree
+	 */
+	void enterLmtId(SimplePascalParser.LmtIdContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lmtId}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
+	 * @param ctx the parse tree
+	 */
+	void exitLmtId(SimplePascalParser.LmtIdContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code tStandardType}
+	 * labeled alternative in {@link SimplePascalParser#typename}.
+	 * @param ctx the parse tree
+	 */
+	void enterTStandardType(SimplePascalParser.TStandardTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tStandardType}
+	 * labeled alternative in {@link SimplePascalParser#typename}.
+	 * @param ctx the parse tree
+	 */
+	void exitTStandardType(SimplePascalParser.TStandardTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code tID}
+	 * labeled alternative in {@link SimplePascalParser#typename}.
+	 * @param ctx the parse tree
+	 */
+	void enterTID(SimplePascalParser.TIDContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tID}
+	 * labeled alternative in {@link SimplePascalParser#typename}.
+	 * @param ctx the parse tree
+	 */
+	void exitTID(SimplePascalParser.TIDContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code sInteger}
 	 * labeled alternative in {@link SimplePascalParser#standard_type}.
@@ -425,16 +541,6 @@ public interface SimplePascalListener extends ParseTreeListener {
 	 */
 	void exitField(SimplePascalParser.FieldContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SimplePascalParser#identifiers}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentifiers(SimplePascalParser.IdentifiersContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SimplePascalParser#identifiers}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentifiers(SimplePascalParser.IdentifiersContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link SimplePascalParser#vardefs}.
 	 * @param ctx the parse tree
 	 */
@@ -454,6 +560,16 @@ public interface SimplePascalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable_defs(SimplePascalParser.Variable_defsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SimplePascalParser#identifiers}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifiers(SimplePascalParser.IdentifiersContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SimplePascalParser#identifiers}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifiers(SimplePascalParser.IdentifiersContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SimplePascalParser#subprograms}.
 	 * @param ctx the parse tree

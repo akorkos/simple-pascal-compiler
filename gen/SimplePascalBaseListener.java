@@ -207,13 +207,37 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariable(SimplePascalParser.VariableContext ctx) { }
+	@Override public void enterVarArr(SimplePascalParser.VarArrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariable(SimplePascalParser.VariableContext ctx) { }
+	@Override public void exitVarArr(SimplePascalParser.VarArrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVarID(SimplePascalParser.VarIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVarID(SimplePascalParser.VarIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVarRec(SimplePascalParser.VarRecContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVarRec(SimplePascalParser.VarRecContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -339,13 +363,61 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType_def(SimplePascalParser.Type_defContext ctx) { }
+	@Override public void enterTypeArray(SimplePascalParser.TypeArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitType_def(SimplePascalParser.Type_defContext ctx) { }
+	@Override public void exitTypeArray(SimplePascalParser.TypeArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeSet(SimplePascalParser.TypeSetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeSet(SimplePascalParser.TypeSetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeRecord(SimplePascalParser.TypeRecordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeRecord(SimplePascalParser.TypeRecordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeEnum(SimplePascalParser.TypeEnumContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeEnum(SimplePascalParser.TypeEnumContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeSubSection(SimplePascalParser.TypeSubSectionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeSubSection(SimplePascalParser.TypeSubSectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -375,25 +447,61 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLimit(SimplePascalParser.LimitContext ctx) { }
+	@Override public void enterLmtnegConst(SimplePascalParser.LmtnegConstContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLimit(SimplePascalParser.LimitContext ctx) { }
+	@Override public void exitLmtnegConst(SimplePascalParser.LmtnegConstContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypename(SimplePascalParser.TypenameContext ctx) { }
+	@Override public void enterLmtConst(SimplePascalParser.LmtConstContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypename(SimplePascalParser.TypenameContext ctx) { }
+	@Override public void exitLmtConst(SimplePascalParser.LmtConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLmtId(SimplePascalParser.LmtIdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLmtId(SimplePascalParser.LmtIdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTStandardType(SimplePascalParser.TStandardTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTStandardType(SimplePascalParser.TStandardTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTID(SimplePascalParser.TIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTID(SimplePascalParser.TIDContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -471,18 +579,6 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdentifiers(SimplePascalParser.IdentifiersContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIdentifiers(SimplePascalParser.IdentifiersContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterVardefs(SimplePascalParser.VardefsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -502,6 +598,18 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariable_defs(SimplePascalParser.Variable_defsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifiers(SimplePascalParser.IdentifiersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifiers(SimplePascalParser.IdentifiersContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

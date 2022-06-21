@@ -20,7 +20,7 @@ public class SimplePascalLexer extends Lexer {
 		FUNCTION=10, PROCEDURE=11, INTEGER=12, REAL=13, BOOLEAN=14, CHAR=15, BEGIN=16, 
 		END=17, IF=18, THEN=19, ELSE=20, WHILE=21, DO=22, FOR=23, DOWNTO=24, TO=25, 
 		WITH=26, READ=27, WRITE=28, RCONST=29, ICONST=30, TRUE=31, FALSE=32, BCONST=33, 
-		CCONST=34, NEQ=35, LTEQ=36, GTEQ=37, LT=38, GT=39, ADDOP=40, SUBOP=41, 
+		CCONST=34, LTEQ=35, GTEQ=36, LT=37, GT=38, NEQ=39, ADDOP=40, SUBOP=41, 
 		OROP=42, MULOP=43, DIVOP=44, DIV=45, MOD=46, ANDOP=47, NOTOP=48, INOP=49, 
 		STRING=50, LPAREN=51, RPAREN=52, SEMI=53, COMMA=54, EQU=55, COLON=56, 
 		LBRACK=57, RBRACK=58, ASSIGN=59, DOT=60, DOTDOT=61, ID=62, COMMENT=63, 
@@ -42,7 +42,7 @@ public class SimplePascalLexer extends Lexer {
 			"OF", "RECORD", "VAR", "FORWARD", "FUNCTION", "PROCEDURE", "INTEGER", 
 			"REAL", "BOOLEAN", "CHAR", "BEGIN", "END", "IF", "THEN", "ELSE", "WHILE", 
 			"DO", "FOR", "DOWNTO", "TO", "WITH", "READ", "WRITE", "RCONST", "ICONST", 
-			"TRUE", "FALSE", "BCONST", "CCONST", "NEQ", "LTEQ", "GTEQ", "LT", "GT", 
+			"TRUE", "FALSE", "BCONST", "CCONST", "LTEQ", "GTEQ", "LT", "GT", "NEQ", 
 			"ADDOP", "SUBOP", "OROP", "MULOP", "DIVOP", "DIV", "MOD", "ANDOP", "NOTOP", 
 			"INOP", "STRING", "LPAREN", "RPAREN", "SEMI", "COMMA", "EQU", "COLON", 
 			"LBRACK", "RBRACK", "ASSIGN", "DOT", "DOTDOT", "ID", "COMMENT", "WHITESPACE", 
@@ -55,8 +55,8 @@ public class SimplePascalLexer extends Lexer {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, null, null, "'<>'", 
-			"'<='", "'>='", "'<'", "'>'", "'+'", "'-'", null, "'*'", null, "'/'", 
+			null, null, null, null, null, null, null, null, null, null, null, "'<='", 
+			"'>='", "'<'", "'>'", "'<>'", "'+'", "'-'", null, "'*'", null, "'/'", 
 			null, null, null, null, null, "'('", "')'", "';'", "','", "'='", "':'", 
 			"'['", "']'", "':='", "'.'", "'..'"
 		};
@@ -68,7 +68,7 @@ public class SimplePascalLexer extends Lexer {
 			"FORWARD", "FUNCTION", "PROCEDURE", "INTEGER", "REAL", "BOOLEAN", "CHAR", 
 			"BEGIN", "END", "IF", "THEN", "ELSE", "WHILE", "DO", "FOR", "DOWNTO", 
 			"TO", "WITH", "READ", "WRITE", "RCONST", "ICONST", "TRUE", "FALSE", "BCONST", 
-			"CCONST", "NEQ", "LTEQ", "GTEQ", "LT", "GT", "ADDOP", "SUBOP", "OROP", 
+			"CCONST", "LTEQ", "GTEQ", "LT", "GT", "NEQ", "ADDOP", "SUBOP", "OROP", 
 			"MULOP", "DIVOP", "DIV", "MOD", "ANDOP", "NOTOP", "INOP", "STRING", "LPAREN", 
 			"RPAREN", "SEMI", "COMMA", "EQU", "COLON", "LBRACK", "RBRACK", "ASSIGN", 
 			"DOT", "DOTDOT", "ID", "COMMENT", "WHITESPACE", "END_EOF"
@@ -204,7 +204,7 @@ public class SimplePascalLexer extends Lexer {
 		"\bF\u0001G\u0001G\u0001G\u0001G\u0001G\u0001H\u0001H\u0001H\u0001H\u0001"+
 		"H\u0001H\u0001I\u0001I\u0003I\u0267\bI\u0001J\u0001J\u0001J\u0003J\u026c"+
 		"\bJ\u0001J\u0001J\u0001K\u0001K\u0001K\u0001L\u0001L\u0001L\u0001M\u0001"+
-		"M\u0001M\u0001N\u0001N\u0001O\u0001O\u0001P\u0001P\u0001Q\u0001Q\u0001"+
+		"M\u0001N\u0001N\u0001O\u0001O\u0001O\u0001P\u0001P\u0001Q\u0001Q\u0001"+
 		"R\u0001R\u0001R\u0001S\u0001S\u0001T\u0001T\u0001T\u0001T\u0001U\u0001"+
 		"U\u0001V\u0001V\u0001V\u0001V\u0001W\u0001W\u0001W\u0001W\u0001X\u0001"+
 		"X\u0001X\u0001X\u0001Y\u0001Y\u0001Y\u0001Z\u0001Z\u0001Z\u0005Z\u029e"+
@@ -303,8 +303,8 @@ public class SimplePascalLexer extends Lexer {
 		"\u0000\u0000\u0000\u008f\u0259\u0001\u0000\u0000\u0000\u0091\u025e\u0001"+
 		"\u0000\u0000\u0000\u0093\u0266\u0001\u0000\u0000\u0000\u0095\u0268\u0001"+
 		"\u0000\u0000\u0000\u0097\u026f\u0001\u0000\u0000\u0000\u0099\u0272\u0001"+
-		"\u0000\u0000\u0000\u009b\u0275\u0001\u0000\u0000\u0000\u009d\u0278\u0001"+
-		"\u0000\u0000\u0000\u009f\u027a\u0001\u0000\u0000\u0000\u00a1\u027c\u0001"+
+		"\u0000\u0000\u0000\u009b\u0275\u0001\u0000\u0000\u0000\u009d\u0277\u0001"+
+		"\u0000\u0000\u0000\u009f\u0279\u0001\u0000\u0000\u0000\u00a1\u027c\u0001"+
 		"\u0000\u0000\u0000\u00a3\u027e\u0001\u0000\u0000\u0000\u00a5\u0280\u0001"+
 		"\u0000\u0000\u0000\u00a7\u0283\u0001\u0000\u0000\u0000\u00a9\u0285\u0001"+
 		"\u0000\u0000\u0000\u00ab\u0289\u0001\u0000\u0000\u0000\u00ad\u028b\u0001"+
@@ -529,11 +529,11 @@ public class SimplePascalLexer extends Lexer {
 		"\u026c\u0003?\u001f\u0000\u026a\u026c\u0003Q(\u0000\u026b\u0269\u0001"+
 		"\u0000\u0000\u0000\u026b\u026a\u0001\u0000\u0000\u0000\u026c\u026d\u0001"+
 		"\u0000\u0000\u0000\u026d\u026e\u0003;\u001d\u0000\u026e\u0096\u0001\u0000"+
-		"\u0000\u0000\u026f\u0270\u0005<\u0000\u0000\u0270\u0271\u0005>\u0000\u0000"+
-		"\u0271\u0098\u0001\u0000\u0000\u0000\u0272\u0273\u0005<\u0000\u0000\u0273"+
+		"\u0000\u0000\u026f\u0270\u0005<\u0000\u0000\u0270\u0271\u0005=\u0000\u0000"+
+		"\u0271\u0098\u0001\u0000\u0000\u0000\u0272\u0273\u0005>\u0000\u0000\u0273"+
 		"\u0274\u0005=\u0000\u0000\u0274\u009a\u0001\u0000\u0000\u0000\u0275\u0276"+
-		"\u0005>\u0000\u0000\u0276\u0277\u0005=\u0000\u0000\u0277\u009c\u0001\u0000"+
-		"\u0000\u0000\u0278\u0279\u0005<\u0000\u0000\u0279\u009e\u0001\u0000\u0000"+
+		"\u0005<\u0000\u0000\u0276\u009c\u0001\u0000\u0000\u0000\u0277\u0278\u0005"+
+		">\u0000\u0000\u0278\u009e\u0001\u0000\u0000\u0000\u0279\u027a\u0005<\u0000"+
 		"\u0000\u027a\u027b\u0005>\u0000\u0000\u027b\u00a0\u0001\u0000\u0000\u0000"+
 		"\u027c\u027d\u0005+\u0000\u0000\u027d\u00a2\u0001\u0000\u0000\u0000\u027e"+
 		"\u027f\u0005-\u0000\u0000\u027f\u00a4\u0001\u0000\u0000\u0000\u0280\u0281"+

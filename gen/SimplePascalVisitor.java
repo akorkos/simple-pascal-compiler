@@ -117,11 +117,26 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParExpression(SimplePascalParser.ParExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#variable}.
+	 * Visit a parse tree produced by the {@code varArr}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVariable(SimplePascalParser.VariableContext ctx);
+	T visitVarArr(SimplePascalParser.VarArrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code varID}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarID(SimplePascalParser.VarIDContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code varRec}
+	 * labeled alternative in {@link SimplePascalParser#variable}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarRec(SimplePascalParser.VarRecContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SimplePascalParser#expressions}.
 	 * @param ctx the parse tree
@@ -187,11 +202,40 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType_defs(SimplePascalParser.Type_defsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#type_def}.
+	 * Visit a parse tree produced by the {@code typeArray}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitType_def(SimplePascalParser.Type_defContext ctx);
+	T visitTypeArray(SimplePascalParser.TypeArrayContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typeSet}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeSet(SimplePascalParser.TypeSetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typeRecord}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeRecord(SimplePascalParser.TypeRecordContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typeEnum}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeEnum(SimplePascalParser.TypeEnumContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typeSubSection}
+	 * labeled alternative in {@link SimplePascalParser#type_def}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeSubSection(SimplePascalParser.TypeSubSectionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SimplePascalParser#dims}.
 	 * @param ctx the parse tree
@@ -205,17 +249,40 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLimits(SimplePascalParser.LimitsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#limit}.
+	 * Visit a parse tree produced by the {@code lmtnegConst}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLimit(SimplePascalParser.LimitContext ctx);
+	T visitLmtnegConst(SimplePascalParser.LmtnegConstContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#typename}.
+	 * Visit a parse tree produced by the {@code lmtConst}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypename(SimplePascalParser.TypenameContext ctx);
+	T visitLmtConst(SimplePascalParser.LmtConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lmtId}
+	 * labeled alternative in {@link SimplePascalParser#limit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLmtId(SimplePascalParser.LmtIdContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code tStandardType}
+	 * labeled alternative in {@link SimplePascalParser#typename}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTStandardType(SimplePascalParser.TStandardTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code tID}
+	 * labeled alternative in {@link SimplePascalParser#typename}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTID(SimplePascalParser.TIDContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code sInteger}
 	 * labeled alternative in {@link SimplePascalParser#standard_type}.
@@ -257,12 +324,6 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitField(SimplePascalParser.FieldContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimplePascalParser#identifiers}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentifiers(SimplePascalParser.IdentifiersContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SimplePascalParser#vardefs}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -274,6 +335,12 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVariable_defs(SimplePascalParser.Variable_defsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SimplePascalParser#identifiers}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifiers(SimplePascalParser.IdentifiersContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SimplePascalParser#subprograms}.
 	 * @param ctx the parse tree
