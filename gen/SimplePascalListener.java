@@ -413,41 +413,15 @@ public interface SimplePascalListener extends ParseTreeListener {
 	 */
 	void exitLimits(SimplePascalParser.LimitsContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code lmtnegConst}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
+	 * Enter a parse tree produced by {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 */
-	void enterLmtnegConst(SimplePascalParser.LmtnegConstContext ctx);
+	void enterLimit(SimplePascalParser.LimitContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code lmtnegConst}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
+	 * Exit a parse tree produced by {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 */
-	void exitLmtnegConst(SimplePascalParser.LmtnegConstContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code lmtConst}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
-	 * @param ctx the parse tree
-	 */
-	void enterLmtConst(SimplePascalParser.LmtConstContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code lmtConst}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
-	 * @param ctx the parse tree
-	 */
-	void exitLmtConst(SimplePascalParser.LmtConstContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code lmtId}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
-	 * @param ctx the parse tree
-	 */
-	void enterLmtId(SimplePascalParser.LmtIdContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code lmtId}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
-	 * @param ctx the parse tree
-	 */
-	void exitLmtId(SimplePascalParser.LmtIdContext ctx);
+	void exitLimit(SimplePascalParser.LimitContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code tStandardType}
 	 * labeled alternative in {@link SimplePascalParser#typename}.

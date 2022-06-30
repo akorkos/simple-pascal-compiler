@@ -1,9 +1,309 @@
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.math.BigInteger;
 import java.util.*;
 
-public class Visitor extends SimplePascalBaseVisitor<Value>{
+public class Visitor extends SimplePascalBaseVisitor<Value> {
     public Map<Variable, Value> memory = new HashMap<Variable, Value>();
-    public Map<Variable, Value> types = new HashMap<Variable, Value>();
+    public Map<Function, Parameter> fmemory = new HashMap<>();
+    private boolean flag = true;
+    private String scope = "Global";;
+
+    @Override
+    public Value visitComp_statement(SimplePascalParser.Comp_statementContext ctx) {
+        flag = false;
+        return Value.VOID;
+    }
+
+    //--------------------------------FOR TYPES-------------------------------------------------------------------------
+
+    @Override
+    public Value visitType_defs(SimplePascalParser.Type_defsContext ctx) {
+        List<TerminalNode> ids = ctx.ID();
+        Value value;
+        Variable variable;
+        String id;
+        for (int i = 0; i < ids.size(); i++) {
+            id = ids.get(i).getText();
+            //variable = findVariable(id);
+            value = this.visit(ctx.type_def(i));
+            //if (variable == null)
+            memory.put(new Variable(id, scope), value);
+        }
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitTypeSet(SimplePascalParser.TypeSetContext ctx) {
+        DataType dataType = new DataType(ctx.typename().getText().toLowerCase());
+        return new Value(dataType, "Set");
+    }
+
+    @Override
+    public Value visitTypeRecord(SimplePascalParser.TypeRecordContext ctx) {
+        return new Value(null, "Record");
+    }
+
+    @Override
+    public Value visitTypeSubSection(SimplePascalParser.TypeSubSectionContext ctx) {
+        return new Value(null, "SubArea");
+    }
+
+    @Override
+    public Value visitTypeEnum(SimplePascalParser.TypeEnumContext ctx) {
+        List<TerminalNode> ids = ctx.identifiers().ID();
+        Integer index = 0;
+
+        for (TerminalNode id : ids) {
+            //if (findVariable(id.getText()) == null) {
+                memory.put(new Variable(id.getText(), scope), new Value(index, new DataType("enum")));
+                index++;
+            //}
+        }
+
+        return new Value(null, "EnumStruct");
+    }
+
+    @Override
+    public Value visitTypeArray(SimplePascalParser.TypeArrayContext ctx) {
+        DataType dataType = new DataType(ctx.typename().getText().toLowerCase());
+        return new Value(dataType, "Array");
+    }
+
+    //----------------------------------------------ETC.----------------------------------------------------------------
+
+    @Override
+    public Value visitSub_header(SimplePascalParser.Sub_headerContext ctx) {
+        SubProgrammTypes type = ctx.FUNCTION() != null ? SubProgrammTypes.Function : SubProgrammTypes.Procedure;
+        String id = ctx.ID().getText();
+        this.scope = "Local";
+        String returnType = null;
+        if (ctx.standard_type() != null)
+            returnType = ctx.standard_type().getText();
+        Parameter parameter = new Parameter();
+        int tmp = 0;
+        if (ctx.formal_parameters() != null && ctx.formal_parameters().parameter_list() != null) {
+            List<SimplePascalParser.IdentifiersContext> ids = ctx.formal_parameters().parameter_list().identifiers();
+            List<SimplePascalParser.TypenameContext> types = ctx.formal_parameters().parameter_list().typename();
+            tmp = ids.size();
+            for (int i = 0; i < ids.size(); i++) {
+                for (TerminalNode j : ids.get(i).ID()){
+                    String t = types.get(i).getText();
+                    if (t.equals("integer") || t.equals("boolean") || t.equals("char") || t.equals("real"))
+                        parameter.addParameter(new Variable(j.getText(), scope), new Value(t));
+                    else
+                        throw new RuntimeException("Parameters must be primitive dataTypes.");
+                }
+            }
+        }
+        Function function;
+        ReturnType ret = ReturnType.Void;
+        if (returnType != null) {
+            if (returnType.equals("integer"))
+                ret = ReturnType.Integer;
+            if (returnType.equals("real"))
+                ret = ReturnType.Real;
+            if (returnType.equals("boolean"))
+                ret = ReturnType.Boolean;
+            if (returnType.equals("char"))
+                ret = ReturnType.Char;
+            function = new Function(id, tmp, type, ret);
+        } else
+            function = new Function(id, tmp, type);
+        if (!findFunction(function.hashCode()))
+            fmemory.put(function, parameter);
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitVariable_defs(SimplePascalParser.Variable_defsContext ctx) {
+        List<SimplePascalParser.IdentifiersContext> ids = ctx.identifiers();
+        List<SimplePascalParser.TypenameContext> type = ctx.typename();
+
+        for (int i = 0; i < ids.size(); i++) {
+            for (TerminalNode j : ids.get(i).ID()){
+                String t = type.get(i).getText();
+                if (t.equals("integer") || t.equals("boolean") || t.equals("char") || t.equals("real"))
+                    memory.put(new Variable(j.getText(), scope), new Value(new DataType(t)));
+                else if (findVariable(t) != null)
+                    memory.put(new Variable(j.getText(), scope), memory.get(findVariable(t)));
+                else
+                    System.out.println("The variable: " + t + " is not defined.");
+            }
+        }
+
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitVarID(SimplePascalParser.VarIDContext ctx) {
+        String id = ctx.ID().getText();
+        Variable variable = findVariable(id);
+        if (variable == null) {
+            System.out.println("No such variable: " + id);
+            return Value.NULL;
+        } else
+            return memory.get(variable);
+    }
+
+    @Override
+    public Value visitConstant_defs(SimplePascalParser.Constant_defsContext ctx) {
+        //String id = ctx.ID().getText();
+        List<TerminalNode> ids = ctx.ID();
+        Value value;
+        Variable variable;
+        String id;
+        for (int i = 0; i < ids.size(); i++) {
+            id = ids.get(i).getText();
+            variable = findVariable(id);
+            value = this.visit(ctx.expression(i));
+            //f (variable == null)
+                memory.put(new Variable(id, scope), value);
+        }
+        return Value.VOID;
+    }
+
+    //------------------------------------FOR CONSTANTS-----------------------------------------------------------------
+
+    @Override
+    public Value visitRealConst(SimplePascalParser.RealConstContext ctx) {
+        if (ctx.getText().contains("0H") || ctx.getText().contains("0h"))
+            return new Value(hexadecimalToReal(ctx.getText()), new DataType("real"));
+        if (ctx.getText().contains("0B") || ctx.getText().contains("0b"))
+            return new Value(binaryToReal(ctx.getText()), new DataType("real"));
+        return new Value(Double.valueOf(ctx.getText()), new DataType("real"));
+    }
+
+    @Override
+    public Value visitBooleanConst(SimplePascalParser.BooleanConstContext ctx) {
+        return new Value(Boolean.valueOf(ctx.getText()), new DataType("boolean"));
+    }
+
+    @Override
+    public Value visitCharConst(SimplePascalParser.CharConstContext ctx) {
+        String str = ctx.getText();
+        // strip quotes
+        str = str.substring(1, str.length() - 1).replace("\"\"", "'");
+        return new Value(str.charAt(0), new DataType("char"));
+    }
+
+    @Override
+    public Value visitIntegerConst(SimplePascalParser.IntegerConstContext ctx) {
+        if (ctx.getText().contains("0H") || ctx.getText().contains("0h"))
+            return new Value(Double.valueOf(hexadecimalToDecimal(ctx.getText())), new DataType("integer"));
+        if (ctx.getText().contains("0B") || ctx.getText().contains("0b"))
+            return new Value((Double.valueOf(binaryToDecimal(ctx.getText()))), new DataType("integer"));
+        return new Value(Integer.valueOf(ctx.getText()), new DataType("integer"));
+    }
+
+    //---------------------------------------EXPRESSIONS----------------------------------------------------------------
+
+    @Override
+    public Value visitVarExpression(SimplePascalParser.VarExpressionContext ctx) {
+        String id = ctx.getText();
+        if (flag) {
+            Variable variable = findVariable(id);
+            if (variable == null) {
+                System.out.println("No such variable: " + id);
+                return Value.VOID;
+            } else
+                return memory.get(variable);
+        }
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitAddSubExpression(SimplePascalParser.AddSubExpressionContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+
+        if (flag) {
+            return switch (ctx.op.getType()) {
+                case SimplePascalParser.ADDOP -> new Value(left.asDouble() + right.asDouble(), left.getDataType());
+                case SimplePascalParser.SUBOP -> new Value(left.asDouble() - right.asDouble(), left.getDataType());
+                default -> null;
+            };
+        }
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitMuldivExpression(SimplePascalParser.MuldivExpressionContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+
+        if (flag){
+            if (ctx.op.getType() == SimplePascalParser.MULOP)
+                return new Value(left.asDouble() * right.asDouble(), left.getDataType());
+            else if (ctx.op.getType() == SimplePascalParser.DIV)
+                return new Value(left.asDouble() / right.asDouble(), new DataType("real"));
+            else if (ctx.op.getType() == SimplePascalParser.DIVOP){
+                if (left.getDataType().getDataType() == PrimativeDataTypes.Integer && right.getDataType().getDataType() == PrimativeDataTypes.Integer)
+                    return new Value(left.asInteger() / right.asInteger(), right.getDataType());
+                throw new RuntimeException("Values must be Integer.");
+            }
+            else if (ctx.op.getType() == SimplePascalParser.MOD){
+                if (left.getDataType().getDataType() == PrimativeDataTypes.Integer && right.getDataType().getDataType() == PrimativeDataTypes.Integer)
+                    return new Value(left.asInteger() % right.asInteger() , left.getDataType());
+                throw new RuntimeException("Values must be Integer.");
+            } else if (ctx.op.getType() == SimplePascalParser.ANDOP){
+                return new Value(left.asBoolean() && right.asBoolean(), left.getDataType());
+            }
+
+        }
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitNotExpression(SimplePascalParser.NotExpressionContext ctx) {
+        Value value = this.visit(ctx.expression());
+        if (flag)
+            return new Value(!value.asBoolean(), value.getDataType());
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitOrExpression(SimplePascalParser.OrExpressionContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+        if (flag)
+            return new Value(left.asBoolean() || right.asBoolean(), left.getDataType());
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitNotationExpression(SimplePascalParser.NotationExpressionContext ctx) {
+        Value value = this.visit(ctx.expression());
+        if (flag){
+            return switch (ctx.op.getType()) {
+                case SimplePascalParser.ADDOP -> new Value(value.asDouble(), value.getDataType());
+                case SimplePascalParser.SUBOP -> new Value(-value.asDouble(), value.getDataType());
+                default -> null;
+            };
+        }
+        return Value.VOID;
+    }
+
+    @Override
+    public Value visitInRElEquExpression(SimplePascalParser.InRElEquExpressionContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+        if (flag) {
+            return switch (ctx.op.getType()) {
+                case SimplePascalParser.LT -> new Value(left.asDouble() < right.asDouble(), new DataType("boolean"));
+                case SimplePascalParser.LTEQ -> new Value(left.asDouble() <= right.asDouble(), new DataType("boolean"));
+                case SimplePascalParser.GT -> new Value(left.asDouble() > right.asDouble(), new DataType("boolean"));
+                case SimplePascalParser.GTEQ -> new Value(left.asDouble() >= right.asDouble(), new DataType("boolean"));
+                case SimplePascalParser.NEQ -> new Value(!Objects.equals(left.asDouble(), right.asDouble()), new DataType("boolean"));
+                case SimplePascalParser.EQU -> new Value(Objects.equals(left.asDouble(), right.asDouble()), new DataType("boolean"));
+                default -> null;
+            };
+        }
+        return Value.VOID;
+    }
+
+    //------------------------------FOR STANDARD TYPES VISIT------------------------------------------------------------
 
     @Override
     public Value visitSBoolean(SimplePascalParser.SBooleanContext ctx) {
@@ -25,44 +325,11 @@ public class Visitor extends SimplePascalBaseVisitor<Value>{
         return new Value(new DataType("real"));
     }
 
+    //-----------------------------------TYPENAME VISITNG---------------------------------------------------------------
+
     @Override
     public Value visitTStandardType(SimplePascalParser.TStandardTypeContext ctx) {
         return this.visit(ctx.standard_type());
-    }
-
-
-
-    @Override
-    public Value visitLmtId(SimplePascalParser.LmtIdContext ctx) {
-        TerminalNode op = ctx.SUBOP();
-        String id = ctx.ID().getText();
-        Variable variable = findVariable(id);
-        if (variable == null)
-            return Value.NULL;
-        Value value = memory.get(variable);
-        if (value.isNUmeric() && op != null){
-            Double val = value.asDouble();
-            val *= -1.0;
-            value.updateValue(new Value(val, value.getDataType()));
-        }
-        return value;
-    }
-
-    @Override
-    public Value visitLmtnegConst(SimplePascalParser.LmtnegConstContext ctx) {
-        TerminalNode op = ctx.SUBOP();
-        Value value = new Value(Double.valueOf(ctx.getText()), new DataType("integer"));
-        if (value.isNUmeric() && op != null){
-            Double val = value.asDouble();
-            val *= -1.0;
-            value.updateValue(new Value(val, value.getDataType()));
-        }
-        return value;
-    }
-
-    @Override
-    public Value visitLmtConst(SimplePascalParser.LmtConstContext ctx) {
-        return this.visit(ctx.constant());
     }
 
     @Override
@@ -74,55 +341,59 @@ public class Visitor extends SimplePascalBaseVisitor<Value>{
         return memory.get(variable);
     }
 
-    @Override
-    public Value visitTypeSet(SimplePascalParser.TypeSetContext ctx) {
-        return this.visit(ctx.typename());
-    }
+    //-----------------------------------------FUNCTIONS DEFAIND BY ME--------------------------------------------------
 
-    @Override
-    public Value visitTypeRecord(SimplePascalParser.TypeRecordContext ctx) {
-        return super.visitTypeRecord(ctx); //needs implemetation
-    }
-
-    @Override
-    public Value visitTypeSubSection(SimplePascalParser.TypeSubSectionContext ctx) {
-        Value left = this.visit(ctx.limit(0));
-        Value right = this.visit(ctx.limit(1));
-
-        return Value.NULL; //needs implemetation
-    }
-
-    @Override
-    public Value visitType_defs(SimplePascalParser.Type_defsContext ctx) {
-        List<TerminalNode> ids = ctx.ID();
-        Value value;
-        Variable variable;
-        String id;
-        for (int i = 0; i < ids.size(); i++) {
-            id = ids.get(i).getText();
-            variable = findVariable(id);
-            value = this.visit(ctx.type_def(i));
-            if (variable == null)
-                memory.put(new Variable(id, "Local"), value);
+    static Integer hexadecimalToDecimal(String hexVal) {
+        hexVal = hexVal.substring(2);
+        int len = hexVal.length();
+        int base = 1;
+        int dec_val = 0;
+        for (int i = len - 1; i >= 0; i--) {
+            if (hexVal.charAt(i) >= '0' && hexVal.charAt(i) <= '9') {
+                dec_val += (hexVal.charAt(i) - 48) * base;
+                base = base * 16;
+            } else if (hexVal.charAt(i) >= 'A'
+                    && hexVal.charAt(i) <= 'F') {
+                dec_val += (hexVal.charAt(i) - 55) * base;
+                base = base * 16;
+            }
         }
-        return Value.VOID;
+        return dec_val;
     }
 
-    @Override
-    public Value visitVariable_defs(SimplePascalParser.Variable_defsContext ctx) {
-        List<SimplePascalParser.IdentifiersContext> ids = ctx.identifiers();
-        List<SimplePascalParser.TypenameContext> type = ctx.typename();
+    static Double hexadecimalToReal(String hexVal) {
+        hexVal = hexVal.substring(2);
+        int dotPos = hexVal.indexOf('.');
+        int len = hexVal.length();
 
-        for (int i = 0; i < ids.size(); i++){
-            for (TerminalNode j : ids.get(i).ID())
-                memory.put(new Variable(j.getText(), "Global"), new Value(new DataType(type.get(i).getText())));
-        }
+        String[] temp = hexVal.split("[.]");
 
-        return Value.VOID;
+        int dec1 = hexadecimalToDecimal(temp[0]);
+        int dec2 = hexadecimalToDecimal(temp[1]);
+
+        return dec1 + ((dec2 * 1.0) / Math.pow(16, len-dotPos+1));
     }
 
-    private Variable findVariable(String ID){
-        for(Map.Entry<Variable, Value> entry : memory.entrySet()) {
+
+
+    static Double binaryToReal(String binVal){
+        binVal = binVal.substring(2);
+        String withoutPeriod = binVal.replace(".", "");
+        double value = new BigInteger(withoutPeriod, 2).doubleValue();
+        String binaryDivisor = "1" + binVal.split("\\.")[1].replace("1", "0");
+        double divisor = new BigInteger(binaryDivisor, 2).doubleValue();
+        return value / divisor;
+    }
+
+
+
+    static Integer binaryToDecimal(String binVal){
+        binVal = binVal.substring(2);
+        return Integer.parseInt(binVal, 2);
+    }
+
+    private Variable findVariable(String ID) {
+        for (Map.Entry<Variable, Value> entry : memory.entrySet()) {
             Variable key = entry.getKey();
             if (key.getID().equals(ID))
                 return key;
@@ -130,150 +401,12 @@ public class Visitor extends SimplePascalBaseVisitor<Value>{
         return null;
     }
 
-    @Override
-    public Value visitVarID(SimplePascalParser.VarIDContext ctx) {
-        String id = ctx.ID().getText();
-        Variable variable = findVariable(id);
-        if (variable == null) {
-            //throw new RuntimeException("No such variable: " + id);
-            // mpories na allakseis thn domh ths value k otan den exei dhlwthei metavlhth na girnas Value pou tha einai empty?
-            System.out.println("No such variable: " + id);
-            return Value.NULL;
+    private Boolean findFunction(int hash){
+        for (Function f : fmemory.keySet()){
+            if (f.hashCode() == hash)
+                return true;
         }
-        else
-            return memory.get(variable);
+        return false;
     }
 
-    @Override
-    public Value visitConstant_defs(SimplePascalParser.Constant_defsContext ctx) {
-        //String id = ctx.ID().getText();
-        List<TerminalNode> ids = ctx.ID();
-        Value value;
-        Variable variable;
-        String id;
-        for (int i = 0; i < ids.size(); i++) {
-            id = ids.get(i).getText();
-            variable = findVariable(id);
-            value = this.visit(ctx.expression(i));
-            if (variable == null)
-                memory.put(new Variable(id, "Local"), value);
-        }
-        return Value.VOID;
-    }
-
-
-    @Override
-    public Value visitAssignment(SimplePascalParser.AssignmentContext ctx) {
-        String id = ctx.variable().getText();
-        Variable variable = findVariable(id);
-        if (variable != null){
-            Value value = this.visit(ctx.expression());
-            DataType dataType = memory.get(variable).getDataType();
-            value.setDataType(dataType);
-            return memory.put(variable, value);
-        }
-        return Value.VOID;
-    }
-
-    @Override
-    public Value visitVarExpression(SimplePascalParser.VarExpressionContext ctx) {
-        String id = ctx.getText();
-        Variable variable = findVariable(id);
-        if (variable == null) {
-            //throw new RuntimeException("No such variable: " + id);
-            System.out.println("!No such variable: " + id);
-            return Value.VOID;
-        }
-        else
-            return memory.get(variable);
-    }
-
-    @Override
-    public Value visitRealConst(SimplePascalParser.RealConstContext ctx) {
-        return new Value(Double.valueOf(ctx.getText()), new DataType("real"));
-    }
-
-    @Override
-    public Value visitBooleanConst(SimplePascalParser.BooleanConstContext ctx) {
-        return new Value(Boolean.valueOf(ctx.getText()), new DataType("boolean"));
-    }
-
-    @Override
-    public Value visitCharConst(SimplePascalParser.CharConstContext ctx) {
-        String str = ctx.getText();
-        // strip quotes
-        str = str.substring(1, str.length() - 1).replace("\"\"", "'");
-        return new Value(str.charAt(0), new DataType("char"));
-    }
-
-    @Override
-    public Value visitIntegerConst(SimplePascalParser.IntegerConstContext ctx) {
-        return new Value(Double.valueOf(ctx.getText()), new DataType("integer"));
-    }
-
-    @Override
-    public Value visitAddSubExpression(SimplePascalParser.AddSubExpressionContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
-
-        return switch (ctx.op.getType()) {
-            case SimplePascalParser.ADDOP -> new Value(left.asDouble() + right.asDouble());
-            case SimplePascalParser.SUBOP -> new Value(left.asDouble() - right.asDouble());
-            default -> null;
-        };
-    }
-
-    @Override
-    public Value visitMuldivExpression(SimplePascalParser.MuldivExpressionContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
-
-        return switch (ctx.op.getType()){
-            case SimplePascalParser.MULOP -> new Value(left.asDouble() * right.asDouble());
-            case SimplePascalParser.DIVOP -> new Value(left.asDouble() / right.asDouble());
-            case SimplePascalParser.DIV -> new Value(left.asInteger() / right.asInteger());
-            case SimplePascalParser.MOD -> new Value(left.asInteger() % right.asInteger());
-            case SimplePascalParser.ANDOP -> new Value(left.asBoolean() && right.asBoolean());
-            default -> null;
-        };
-    }
-
-    @Override
-    public Value visitNotExpression(SimplePascalParser.NotExpressionContext ctx) {
-        Value value = this.visit(ctx.expression());
-        return new Value(!value.asBoolean());
-    }
-
-    @Override
-    public Value visitOrExpression(SimplePascalParser.OrExpressionContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
-        return new Value(left.asBoolean() || right.asBoolean());
-    }
-
-    @Override
-    public Value visitNotationExpression(SimplePascalParser.NotationExpressionContext ctx) {
-        Value value = this.visit(ctx.expression());
-        return switch (ctx.op.getType()){
-            case SimplePascalParser.ADDOP -> new Value(value.asDouble());
-            case SimplePascalParser.SUBOP ->  new Value(-value.asDouble());
-            default -> null;
-        };
-    }
-
-    @Override
-    public Value visitInRElEquExpression(SimplePascalParser.InRElEquExpressionContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
-
-        return switch (ctx.op.getType()) {
-            case SimplePascalParser.LT -> new Value(left.asDouble() < right.asDouble());
-            case SimplePascalParser.LTEQ -> new Value(left.asDouble() <= right.asDouble());
-            case SimplePascalParser.GT -> new Value(left.asDouble() > right.asDouble());
-            case SimplePascalParser.GTEQ -> new Value(left.asDouble() >= right.asDouble());
-            case SimplePascalParser.NEQ -> new Value(!Objects.equals(left.asDouble(), right.asDouble()));
-            case SimplePascalParser.EQU -> new Value(Objects.equals(left.asDouble(), right.asDouble()));
-            default -> null;
-        };
-    }
 }

@@ -28,6 +28,6 @@ public class Variable {
 
     @Override
     public String toString(){
-        return "ID: " + this.ID + ", scope: " + this.Scope + ",";
+        return "ID: " + this.ID + " | scope: " + this.Scope;
     }
 }

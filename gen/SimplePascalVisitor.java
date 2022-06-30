@@ -249,26 +249,11 @@ public interface SimplePascalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLimits(SimplePascalParser.LimitsContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code lmtnegConst}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
+	 * Visit a parse tree produced by {@link SimplePascalParser#limit}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLmtnegConst(SimplePascalParser.LmtnegConstContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code lmtConst}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLmtConst(SimplePascalParser.LmtConstContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code lmtId}
-	 * labeled alternative in {@link SimplePascalParser#limit}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLmtId(SimplePascalParser.LmtIdContext ctx);
+	T visitLimit(SimplePascalParser.LimitContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code tStandardType}
 	 * labeled alternative in {@link SimplePascalParser#typename}.

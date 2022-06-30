@@ -3,17 +3,25 @@ public class Value {
     public static Value NULL = new Value(new Object());
     private DataType dataType;
     private Object value;
+    private String type;
 
     public Value(Object value) {
         if (value instanceof DataType)
             this.dataType = (DataType) value;
         else
             this.value = value;
+        this.type = null;
     }
 
     public Value(Object value, DataType dataType) {
         this.dataType = dataType;
         this.value = value;
+        this.type = null;
+    }
+
+    public Value(DataType dataType, String type) {
+        this.type = type;
+        this.dataType = dataType;
     }
 
     public void updateValue(Object value) {
@@ -29,37 +37,15 @@ public class Value {
     }
 
     public Double asDouble() {
-        return (Double)value;
+        return ((Number)value).doubleValue();
     }
 
     public Integer asInteger() {
-        Double d = (Double)value;
-        return d.intValue();
-    }
-
-    public String asString() {
-        return String.valueOf(value);
-    }
-
-    public boolean isDouble() {
-        return value instanceof Double;
+        return ((Number)value).intValue();
     }
 
     public DataType getDataType(){
         return dataType;
-    }
-
-    public void setDataType(DataType dataType){
-        this.dataType = dataType;
-    }
-
-    public Boolean isNUmeric(){
-        return this.dataType.getDataType() == PrimativeDataTypes.Integer || this.dataType.getDataType() == PrimativeDataTypes.Real;
-    }
-
-    public void updateNumericValue(){
-
-
     }
 
     @Override
@@ -90,7 +76,15 @@ public class Value {
 
     @Override
     public String toString() {
-        return "Value: " + this.value + ", dataType: " + this.dataType;
+        if (this.type != null) {
+            if (this.type.equals("Set") || this.type.equals("Array"))
+                return " | dataType: " + this.dataType + "| type: " + this.type;
+            if (this.type.equals("Record") || this.type.equals("SubArea") || this.type.equals("EnumStruct"))
+                return " | type: " + this.type;
+        }
+        if (this.value == null)
+            return " | value is not set yet | dataType: " + this.dataType;
+        return " | value: " + this.value + " | dataType: " + this.dataType;
     }
 
 }

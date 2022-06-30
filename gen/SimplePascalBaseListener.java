@@ -447,37 +447,13 @@ public class SimplePascalBaseListener implements SimplePascalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLmtnegConst(SimplePascalParser.LmtnegConstContext ctx) { }
+	@Override public void enterLimit(SimplePascalParser.LimitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLmtnegConst(SimplePascalParser.LmtnegConstContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLmtConst(SimplePascalParser.LmtConstContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLmtConst(SimplePascalParser.LmtConstContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLmtId(SimplePascalParser.LmtIdContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLmtId(SimplePascalParser.LmtIdContext ctx) { }
+	@Override public void exitLimit(SimplePascalParser.LimitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

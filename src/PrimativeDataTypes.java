@@ -2,6 +2,8 @@ public enum PrimativeDataTypes {
     Integer,
     Real,
     Boolean,
-    Char
+    Char,
+    Enum,
+    DefinedType
 }
 
