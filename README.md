@@ -7,7 +7,7 @@
 * [Τεχνική αναφορά](https://github.com/akorkos/Simple-Pascal/raw/master/SGP%20-%20Report.pdf)
 
 ### Informatinon 
-This repository includes the CRC assignement and the Parity bit assignement for the course [Programming languages and compilers](https://elearning.auth.gr/course/view.php?id=8084) (Spring 2021-22) at the computer science department @[AUTh](https://www.auth.gr/en/).
+This repository includes a compiler for the SimplePascal language assignement for the course [Programming languages and compilers](https://elearning.auth.gr/course/view.php?id=8084) (Spring 2021-22) at the computer science department @[AUTh](https://www.auth.gr/en/).
 
 * [*Assignment* description **(GR)**](https://github.com/akorkos/Simple-Pascal/raw/master/Assignment_description.pdf)
 * [Τechnical report **(GR)**](https://github.com/akorkos/Simple-Pascal/raw/master/SGP%20-%20Report.pdf)
