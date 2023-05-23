@@ -1,4 +1,4 @@
-# Simple Pascal compiler
+# Compiler Design 101
 
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/akorkos/Simple-Pascal-Compiler"> <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/akorkos/Simple-Pascal-Compiler">
 
