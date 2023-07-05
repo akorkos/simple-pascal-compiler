@@ -8,3 +8,6 @@ The SimplePascal language resembles the high-level language PASCAL and is define
 
 For more infomation about the lexical, syntax analysis and parsing, see [SimplePascal description **(GR)**](https://github.com/akorkos/Simple-Pascal/raw/master/Assignment_description.pdf).
 
+## Documentation
+
+The results of the assignment are consolidated in the file [Compiler Design 101 **(GR)**](https://github.com/akorkos/Simple-Pascal-Compiler/blob/master/SGP%20-%20Report.pdf).
